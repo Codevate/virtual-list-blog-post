@@ -1,0 +1,11 @@
+build:
+  - clean:js
+  - clean:vendors
+  - ngtemplates
+  - concat
+  - concurrent:minify
+  - clean:postBuild
+
+default:
+  - build
+  - watch
