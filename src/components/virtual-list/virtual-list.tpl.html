@@ -1,0 +1,13 @@
+<div class="container">
+  <div virtual-list-scroller sizer-height="$ctrl.scrollerHeight" rendered-items="$ctrl.renderedItems">
+    <li ng-repeat="item in $ctrl.items track by item.id" class="js-list-row scroller__item">
+      {{ ::item.title }}
+
+      <div ng-if="item.isLarge">
+        <p>{{ ::item.project }}</p>
+        <p>{{ ::item.postcode }}</p>
+        <p>{{ ::item.projectManager }}</p>
+      </div>
+    </li>
+  </div>
+</div>

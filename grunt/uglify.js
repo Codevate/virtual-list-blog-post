@@ -9,7 +9,7 @@ module.exports = {
     }
   },
   app: {
-    src: 'dist/bundle.concat.js',
+    src: 'dist/bundle.transpiled.js',
     dest: 'dist/bundle.min.js'
   },
   vendors: {

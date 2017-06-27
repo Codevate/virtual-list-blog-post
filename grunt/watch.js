@@ -3,7 +3,14 @@
 module.exports = {
   js: {
     files: ['src/app.js', 'src/**/*.{js,tpl.html}'],
-    tasks: ['clean:js', 'ngtemplates', 'concat:app', 'babel', 'minify:app'],
+    tasks: ['build'],
+    options: {
+      livereload: true
+    }
+  },
+  static: {
+    files: ['src/index.html', 'src/css/app.css'],
+    tasks: ['build'],
     options: {
       livereload: true
     }

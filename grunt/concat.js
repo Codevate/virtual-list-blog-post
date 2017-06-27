@@ -17,6 +17,8 @@ module.exports = {
   },
   vendors: {
     src: [
+      'bower_components/angular/angular.js',
+      'bower_components/jQuery/dist/jquery.js',
     ],
     dest: 'dist/vendors.concat.js'
   }

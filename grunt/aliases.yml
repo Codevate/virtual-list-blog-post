@@ -1,10 +1,11 @@
 build:
+  - copy
   - clean:js
   - clean:vendors
   - ngtemplates
   - concat
+  - babel
   - concurrent:minify
-  - clean:postBuild
 
 default:
   - build
