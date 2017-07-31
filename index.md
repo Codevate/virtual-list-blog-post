@@ -12,7 +12,7 @@ Pagination is described as:
 > The process of dividing a document into discrete pages, either electronic pages or printed pages.
 (<https://en.wikipedia.org/wiki/Pagination> accessed June 26, 2017).
 
-"Something about pagination here, goal oriented finding task (i.e. finding an item), easier to skip to a certain page where the item may be. Easier for people to remember the general location of items (https://www.nngroup.com/articles/infinite-scrolling/). Mention Google search results are paginated?"
+Pagination is the most common way of separating lists of content into a smaller set of digestible data. Pagination lends itself to goal oriented finding tasks, such as finding a specific record from a list of records in a database. Additionally, pagination assists the user in finding a record they have previously found. If the user roughly knows where they found the record previously, they can use the pagination page number navigation to find the record again.
 
 ### Infinite scroll
 Infinite scroll is described as:
@@ -43,9 +43,7 @@ As always, the example project for this blog post can be found at the Codevate g
 
 ### Staring a new project
 
-# May swap this out for just adding the files to the index.html file
-
-To begin with, we will be using npm and bower to bring in our dependencies, and we will be using Grunt as our task runner. First, lets create a new npm project with `npm init`. Follow the question, feel free to press the enter key for all of the questions as they aren't important to this demonstration.
+We will be using npm and bower to bring in our dependencies, and we will be using Grunt as our task runner. First, lets create a new npm project with `npm init`. Follow the question, feel free to press the enter key for all of the questions as they aren't important to this demonstration.
 
 Now npm is ready we can include our Grunt dependencies:
 
@@ -65,9 +63,7 @@ With all of our dependencies installed, we are ready to create our build process
 
 ### Setting up the build process
 
-**Not sure if we really want this**
-
-Now that Grunt is installed we can start creating our basic build process to concat, transpile, and minify the JavaScript. First we need a Gruntfile so that Grunt knows what plugins we want to use and also so that we can outline our build steps.
+Now that Grunt is and our dev dependencies are installed we can start creating our basic build process to concat, transpile, and minify the JavaScript. First we need a Gruntfile so that Grunt knows what plugins we want to use and also so that we can outline our build steps.
 
 ```
 'use strict';
@@ -87,7 +83,7 @@ module.exports = function (grunt) {
 };
 ```
 
-Now we can define out build steps. Create a new directory in the root of the project and name it `grunt`. Inside this directory create a new file named `aliases.yml`, this is where we will outline our build steps. Copy the following into the `aliases.yml` file:
+Create a new directory in the root of the project and name it `grunt`. Inside this directory create a new file named `aliases.yml`, this is where we will outline our build steps. Copy the following into the `aliases.yml` file:
 
 ```
 build:
@@ -104,163 +100,10 @@ default:
   - watch
 ```
 
-We now need to define each of the steps:
+With our build steps in place we need to add each of the plugin config files. You can find these in the `grunt` directory of the github project here. **LINK TO GITHUB PAGE**.
 
-```
-// grunt/babel.js
+With the Grunt tasks setup we are now able to start the build process by simply typing `grunt` in the command line. Additionally, as we have added a watch step to the default task, whenever we change a `src` file grunt will automatically run.
 
-'use strict';
-
-module.exports = {
-  dist: {
-    files: {
-      'dist/bundle.transpiled.js': 'dist/bundle.concat.js'
-    }
-  }
-};
-
-```
-
-```
-// grunt/clean.js
-
-'use strict';
-
-module.exports = {
-  js: [
-    'dist/bundle.*',
-    'dist/templates.js',
-  ],
-  vendors: [
-    'dist/vendors.*',
-  ],
-};
-```
-
-```
-// grunt/concat.js
-
-'use strict';
-
-module.exports = {
-  options: {
-    stripBanners: {
-      block: true
-    },
-    sourceMap: true
-  },
-  app: {
-    src: [
-      'src/**/*.module.js',
-      'src/app.js',
-      'src/**/*.js',
-    ],
-    dest: 'dist/bundle.concat.js'
-  },
-  vendors: {
-    src: [
-      'bower_components/angular/angular.js',
-      'bower_components/jQuery/dist/jquery.js',
-    ],
-    dest: 'dist/vendors.concat.js'
-  }
-};
-```
-
-```
-// grunt/concurrent.js
-
-'use strict';
-
-module.exports = {
-  minify: ['uglify'],
-};
-```
-
-```
-// grunt/copy.js
-
-'use strict';
-
-module.exports = {
-  app: {
-    files: [
-      {
-        expand: true,
-        flatten: true,
-        src: [
-          'src/index.html',
-          'src/css/app.css',
-        ],
-        dest: 'dist'
-      },
-    ]
-  }
-};
-```
-
-```
-// grunt/ngtemplates.js
-
-'use strict';
-
-module.exports = {
-  app: {
-    src: 'src/**/*.tpl.html',
-    dest: 'dist/templates.js',
-    options: {
-      htmlmin: { collapseWhitespace: true, collapseBooleanAttributes: true },
-    }
-  }
-};
-```
-
-```
-// grunt/uglify.js
-
-'use strict';
-
-module.exports = {
-  options: {
-    sourceMap: true,
-    sourceMapIncludeSources: true,
-    sourceMapIn: function (path) {
-      return path + '.map';
-    }
-  },
-  app: {
-    src: 'dist/bundle.transpiled.js',
-    dest: 'dist/bundle.min.js'
-  },
-  vendors: {
-    src: 'dist/vendors.concat.js',
-    dest: 'dist/vendors.min.js'
-  }
-};
-```
-
-```
-// grunt/watch.js
-
-'use strict';
-
-module.exports = {
-  js: {
-    files: ['src/app.js', 'src/**/*.{js,tpl.html}'],
-    tasks: ['build'],
-    options: {
-      livereload: true
-    }
-  },
-  static: {
-    files: ['src/index.html', 'src/css/app.css'],
-    tasks: ['build'],
-    options: {
-      livereload: true
-    }
-  }
-};
-```
 
 ### Implementing the virtual list
 To begin with we need to create a new module for our demo app.
